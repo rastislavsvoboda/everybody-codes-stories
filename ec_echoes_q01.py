@@ -4,7 +4,7 @@ import re
 
 # import pyperclip
 
-CRED = '\033[91m'
+CWHT = '\033[97m'
 CGRN = '\033[92m'
 CEND = '\033[0m'
 
@@ -203,24 +203,24 @@ def solve3(text):
 
 
 p1_s1 = solve1(text_sample1)
-print(CRED + "sample:", p1_s1, CEND)  # 11611972920
+print(CWHT + "sample:", p1_s1, CEND)  # 11611972920
 assert p1_s1 == 11611972920
 print(CGRN + "puzzle:", solve1(text_p1), CEND)  # 8112119159
 
 p2_s1 = solve2(text_sample2_1)
-print(CRED + "sample:", p2_s1, CEND)  # 11051340
+print(CWHT + "sample:", p2_s1, CEND)  # 11051340
 assert p2_s1 == 11051340
 p2_s2 = solve2(text_sample2_2)
-print(CRED + "sample:", p2_s2, CEND)  # 1507702060886
+print(CWHT + "sample:", p2_s2, CEND)  # 1507702060886
 assert p2_s2 == 1507702060886
 print(CGRN + "puzzle:", solve2(text_p2), CEND)  # 130462353088217
 # wrong 92697326194062
 
 p3_s1 = solve3(text_sample3_1)
-print(CRED + "sample:", p3_s1, CEND)  # 3279640
+print(CWHT + "sample:", p3_s1, CEND)  # 3279640
 assert p3_s1 == 3279640
 p3_s2 = solve3(text_sample3_2)
-print(CRED + "sample:", p3_s2, CEND)  # 7276515438396
+print(CWHT + "sample:", p3_s2, CEND)  # 7276515438396
 assert p3_s2 == 7276515438396
 print(CGRN + "puzzle:", solve3(text_p3), CEND)  # 508850677081888
 
