@@ -1,7 +1,7 @@
 ﻿from datetime import datetime
 from dataclasses import dataclass
 
-CRED = '\033[91m'
+CWHT = '\033[97m'
 CGRN = '\033[92m'
 CEND = '\033[0m'
 
@@ -256,23 +256,23 @@ def solve3(text):
 
 
 p1_s1 = solve1(text_sample1_1)
-print(CRED + "sample:", p1_s1, CEND)  # CFGNLK
+print(CWHT + "sample:", p1_s1, CEND)  # CFGNLK
 assert p1_s1 == "CFGNLK"
 p1_s2 = solve1(text_sample1_2)
-print(CRED + "sample:", p1_s2, CEND)  # EVERYBODYCODES
+print(CWHT + "sample:", p1_s2, CEND)  # EVERYBODYCODES
 assert p1_s2 == "EVERYBODYCODES"
 print(CGRN + "puzzle:", solve1(text_p1), CEND)  # QUACK!TLPFYXYT
 
 p2_s1 = solve2(text_sample2)
-print(CRED + "sample:", p2_s1, CEND)  # MGFLNK
+print(CWHT + "sample:", p2_s1, CEND)  # MGFLNK
 assert p2_s1 == "MGFLNK"
 print(CGRN + "puzzle:", solve2(text_p2), CEND)  # QUACK!VGWZNSBMRWTLWN
 
 p3_s1 = solve3(text_sample3_1)
-print(CRED + "sample:", p3_s1, CEND)  # DJMGL
+print(CWHT + "sample:", p3_s1, CEND)  # DJMGL
 assert p3_s1 == "DJMGL"
 p3_s2 = solve3(text_sample3_2)
-print(CRED + "sample:", p3_s2, CEND)  # DJCGL
+print(CWHT + "sample:", p3_s2, CEND)  # DJCGL
 assert p3_s2 == "DJCGL"
 print(CGRN + "puzzle:", solve3(text_p3), CEND)  # QUACK!SJNWHTYLZGSVBYYJMLFMJBBYNPNN
 
