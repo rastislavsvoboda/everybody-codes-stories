@@ -51,7 +51,6 @@ def eni2(n, exp, mod):
 def eni2_faster(n, exp, mod):
     res = deque()
     x = 1
-    # print("starting eni2_faster with n =", n, "exp =", exp, "mod =", mod)
     seen = defaultdict(list)
     found = False
     i = 0
@@ -66,12 +65,10 @@ def eni2_faster(n, exp, mod):
         if state in seen and not found:
             found = True
             cycle_len = i - seen[state][0]
-            # print("cycle detected! len:", cycle_len, "at i =", i)
-            while i < exp - cycle_len - 1:
+            while i < exp - cycle_len:
                 rest = exp - i
                 cycles = rest // cycle_len
                 i += cycles * cycle_len
-                # i += cycle_len
             # now continue normally
             seen[state].append(i)
         else:
@@ -89,14 +86,11 @@ def eni3(n, exp, mod):
 
 
 def eni3_faster(n, exp, mod):
-    res = 0
     x = 1
     seen = defaultdict(list)
     seen2 = defaultdict(int)
     found = False
     i = 0
-    R = []
-    RR = set()
     while i < exp:
         x = (x * n) % mod
         i += 1
@@ -107,8 +101,6 @@ def eni3_faster(n, exp, mod):
                 cycle_len = i - seen[x][0]
                 assert cycle_len % 2 == 0
                 cycle_len = cycle_len // 2
-                # print("cycle detected! len:", cycle_len, "at i =", i)
-                # seen[x].append(i)
 
                 while i < exp - cycle_len:
                     rest = exp - i - 1
@@ -116,36 +108,19 @@ def eni3_faster(n, exp, mod):
                     i += cycles * cycle_len
 
                     for k in seen2:
+                        # increase only those seen more than once
                         if seen2[k] > 1:
                             seen2[k] += cycles
                     # now continue normally
 
-            # assert False
-            R.append(x)
         else:
-            R.append(x)
             seen[x].append(i)
             seen2[x] += 1
-
-        # if res in seen and not found:
-        #     found = True
-        #     cycle_len = i - seen[res][0]
-        #     print("cycle detected! len:", cycle_len, "at i =", i)
-        #     while i < exp - cycle_len - 1:
-        #         rest = exp - i
-        #         cycles = rest // cycle_len
-        #         i += cycles * cycle_len
-        #         # i += cycle_len
-        #     # now continue normally
-        #     seen[res].append(i)
-        # else:
-        #     seen[res].append(i)
 
     res = 0
     for k, v in seen2.items():
         res += k * v
 
-    # res = sum(R)
     return res
 
 
@@ -158,13 +133,10 @@ def lst_to_num(lst):
 
 
 def solve1(text):
-    # func = eni(A, X, M) + eni(B, Y, M) + eni(C, Z, M)
-
-    s1 = eni(2, 4, 5)
-    assert lst_to_num(s1) == 1342
-
-    s2 = eni(3, 5, 16)
-    assert lst_to_num(s2) == 311193
+    # s1 = eni(2, 4, 5)
+    # assert lst_to_num(s1) == 1342
+    # s2 = eni(3, 5, 16)
+    # assert lst_to_num(s2) == 311193
 
     res = None
     for line in text.splitlines():
@@ -184,8 +156,6 @@ def solve1(text):
 
 
 def solve2(text):
-    # func = eni(A, X, M) + eni(B, Y, M) + eni(C, Z, M)
-
     # s1 = eni2(2,7,5)
     # assert lst_to_num(s1) == 34213
     # s2 = eni2(3,8,16)
@@ -197,31 +167,8 @@ def solve2(text):
     # s5 = eni2(8,16,16)
     # assert lst_to_num(s5) == 0
 
-    # for _i in range(1, 20):
-    #     ss1 = eni2(8,_i,16)
-    #     ss2 = eni2_faster(8, _i, 16)
-    #     print(_i, lst_to_num(ss1), lst_to_num(ss2))
-
-    # for _i in range(1, 30):
-    #     ss1 = eni2(4,_i,11)
-    #     ss2 = eni2_faster(4, _i, 11)
-    #     print(_i, lst_to_num(ss1), lst_to_num(ss2))
-    #
-    # for _i in range(1, 30):
-    #     ss1 = eni2(5,_i,11)
-    #     ss2 = eni2_faster(5, _i, 11)
-    #     print(_i, lst_to_num(ss1), lst_to_num(ss2))
-    #
-    # for _i in range(1, 30):
-    #     ss1 = eni2(6,_i,11)
-    #     ss2 = eni2_faster(6, _i, 11)
-    #     print(_i, lst_to_num(ss1), lst_to_num(ss2))
-
-    # assert False
-
     res = None
     for i, line in enumerate(text.splitlines()):
-        # print(i)
         A, B, C, X, Y, Z, M = get_all_nums(line)
         a_lst = eni2_faster(A, X, M)
         b_lst = eni2_faster(B, Y, M)
@@ -238,52 +185,11 @@ def solve2(text):
 
 
 def solve3(text):
-    # s1 = eni3(2,7,5)
-    # assert s1 == 19
-    #
-    # s2 = eni3(3,8,16)
-    # assert s2 == 48
-    #
-    # s1 = eni3_faster(2,7,5)
-    # assert s1 == 19
-    #
-    # s2 = eni3_faster(3,8,16)
-    # assert s2 == 48
-
-    # s3 = eni3_faster(4,3000,110)
-    # assert s3 == 132000
-    #
-    # s4 = eni3_faster(4,14000,110)
-    # assert s4 == 616000
-    #
-    # assert eni3_faster(6,15000,110) == 825000
-    # assert eni3_faster(8,8000,120) == 240000
-    assert eni3(4, 14000, 120) == 559940
-    assert eni3_faster(4, 14000, 120) == 559940
-    # assert eni3_faster(7,16000,120) == 640000
-
-    # assert False
-    # for _i in range(1, 20):
-    #     ss1 = eni3(1,_i,10)
-    #     ss2 = eni3_faster(1, _i, 10)
-    #     print(_i, ss1, ss2)
-    #
-    # for _i in range(1, 20):
-    #     ss1 = eni3(2,_i,10)
-    #     ss2 = eni3_faster(2, _i, 10)
-    #     print(_i, ss1, ss2)
-    #
-    # for _i in range(1, 20):
-    #     ss1 = eni3(3,_i,10)
-    #     ss2 = eni3_faster(3, _i, 10)
-    #     print(_i, ss1, ss2)
-    #
-    #
-    # assert False
+    # assert eni3(4, 14000, 120) == 559940
+    # assert eni3_faster(4, 14000, 120) == 559940
 
     res = None
     for i, line in enumerate(text.splitlines()):
-        # print(i)
         A, B, C, X, Y, Z, M = get_all_nums(line)
         a_num = eni3_faster(A, X, M)
         b_num = eni3_faster(B, Y, M)
