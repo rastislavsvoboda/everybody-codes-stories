@@ -1,8 +1,6 @@
 ﻿from datetime import datetime
 from dataclasses import dataclass
 
-# import pyperclip
-
 CRED = '\033[91m'
 CGRN = '\033[92m'
 CEND = '\033[0m'
@@ -104,23 +102,6 @@ class Tree:
                 res.extend(self.right.find_all_parents_and_trees_with_id(id))
         return res
 
-    # def set_tree(self, id, tree):
-    #     if self.val is None:
-    #         return
-    #     if self.val.id == id:
-    #         self.val = tree.val
-    #         self.left = tree.left
-    #         self.right = tree.right
-    #         return
-    #     if self.left is not None:
-    #         if self.left.val is not None and self.left.val.id == id:
-    #             self.left = tree
-    #             return
-    #     if self.right is not None:
-    #         if self.right.val is not None and self.right.val.id == id:
-    #             self.right = tree
-    #             return
-
 
 def solve1(text):
     R = Tree()
@@ -219,76 +200,46 @@ def solve3(text):
             right = right.split('=')[1][1:-1]
             r_num, r_char = right.split(',')
             rn = int(r_num)
-            # print(cmd,n,ln,l_char,rn,r_char)
-            # print(ln,l_char,rn,r_char)
             L.add(Node(n, ln, l_char))
             R.add(Node(n, rn, r_char))
         elif cmd == "SWAP":
             n = int(rest[0])
-            # print(line)
             if n == 1:
+                # swap roots
                 L, R = R, L
             else:
+                # find parents and trees
                 par_lefts = L.find_all_parents_and_trees_with_id(n)
                 par_rights = R.find_all_parents_and_trees_with_id(n)
 
+                # assign parents and trees
                 if len(par_lefts) == 1 and len(par_rights) == 1:
                     # between 2 trees
                     p1, t1 = par_lefts[0]
                     p2, t2 = par_rights[0]
-
-                    if p1.left is not None and p1.left == t1:
-                        p1.left = t2
-                    elif p1.right is not None and p1.right == t1:
-                        p1.right = t2
-                    else:
-                        assert False
-
-                    if p2.left is not None and p2.left == t2:
-                        p2.left = t1
-                    elif p2.right is not None and p2.right == t2:
-                        p2.right = t1
-                    else:
-                        assert False
-
                 elif len(par_lefts) == 2:
                     # inside left tree
                     p1, t1 = par_lefts[0]
                     p2, t2 = par_lefts[1]
-
-                    if p1.left is not None and p1.left == t1:
-                        p1.left = t2
-                    elif p1.right is not None and p1.right == t1:
-                        p1.right = t2
-                    else:
-                        assert False
-
-                    if p2.left is not None and p2.left == t2:
-                        p2.left = t1
-                    elif p2.right is not None and p2.right == t2:
-                        p2.right = t1
-                    else:
-                        assert False
-
                 elif len(par_rights) == 2:
                     # inside right tree
                     p1, t1 = par_rights[0]
                     p2, t2 = par_rights[1]
+                else:
+                    assert False
 
-                    if p1.left is not None and p1.left == t1:
-                        p1.left = t2
-                    elif p1.right is not None and p1.right == t1:
-                        p1.right = t2
-                    else:
-                        assert False
+                # swap trees in parents
+                if p1.left is not None and p1.left == t1:
+                    p1.left = t2
+                elif p1.right is not None and p1.right == t1:
+                    p1.right = t2
+                else:
+                    assert False
 
-                    if p2.left is not None and p2.left == t2:
-                        p2.left = t1
-                    elif p2.right is not None and p2.right == t2:
-                        p2.right = t1
-                    else:
-                        assert False
-
+                if p2.left is not None and p2.left == t2:
+                    p2.left = t1
+                elif p2.right is not None and p2.right == t2:
+                    p2.right = t1
                 else:
                     assert False
         else:
