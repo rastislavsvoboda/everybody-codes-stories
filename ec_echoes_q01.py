@@ -102,8 +102,8 @@ def eni3_faster(n, exp, mod):
                 assert cycle_len % 2 == 0
                 cycle_len = cycle_len // 2
 
-                while i < exp - cycle_len:
-                    rest = exp - i - 1
+                if i < exp - cycle_len:
+                    rest = exp - i
                     cycles = rest // cycle_len
                     i += cycles * cycle_len
 
