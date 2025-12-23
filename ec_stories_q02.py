@@ -116,18 +116,12 @@ def solve1(text):
         right = right.split('=')[1][1:-1]
         r_num, r_char = right.split(',')
         rn = int(r_num)
-        # print(cmd,n,ln,l_char,rn,r_char)
-        # print(ln,l_char,rn,r_char)
         L.add(Node(n, ln, l_char))
         R.add(Node(n, rn, r_char))
-
-    # print(L)
-    # print(R)
 
     cnt_left = L.count_nodes()
     cnt_right = R.count_nodes()
 
-    # print(cnt_left, cnt_right)
     val_left = sorted(cnt_left.values())
     val_right = sorted(cnt_right.values())
 
@@ -152,8 +146,6 @@ def solve2(text):
             right = right.split('=')[1][1:-1]
             r_num, r_char = right.split(',')
             rn = int(r_num)
-            # print(cmd,n,ln,l_char,rn,r_char)
-            # print(ln,l_char,rn,r_char)
             L.add(Node(n, ln, l_char))
             R.add(Node(n, rn, r_char))
         elif cmd == "SWAP":
@@ -169,13 +161,9 @@ def solve2(text):
         else:
             assert False
 
-    # print(L)
-    # print(R)
-
     cnt_left = L.count_nodes()
     cnt_right = R.count_nodes()
 
-    # print(cnt_left, cnt_right)
     val_left = sorted(cnt_left.values())
     val_right = sorted(cnt_right.values())
 
