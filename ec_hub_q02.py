@@ -128,13 +128,12 @@ print(CWHT + "sample:", p2_s1, CEND)  # 14
 assert p2_s1 == 14
 print(CGRN + "puzzle:", solve2(text_p2, 100), CEND)  # 21527
 
+# recheck solve3 with p2 samples
 assert solve3("GGBR", 5) == 14
 assert solve3("BBRGGRRGBBRGGBRGBBRRBRRRBGGRRRBGBGG", 10) == 304
 assert solve3("BBRGGRRGBBRGGBRGBBRRBRRRBGGRRRBGBGG", 50) == 1464
 assert solve3("BBRGGRRGBBRGGBRGBBRRBRRRBGGRRRBGBGG", 100) == 2955
-print(CWHT + "puzzle:", solve3(text_p2, 100), CEND)  # 21527
-
-# no sample for p3
+assert solve3(text_p2, 100) == 21527
 print(CGRN + "puzzle:", solve3(text_p3, 100000), CEND)  # 21259841
 
 stop = datetime.now()
