@@ -23,59 +23,6 @@ text_sample3_3 = open(quest + '_sample_p3_3.txt').read()
 text_p3 = open(quest + '_puzzle_p3.txt').read()
 
 
-def solve1(text):
-    nails = []
-    tokens = []
-    nails_text, tokens_text = text.split('\n\n')
-    for n in nails_text.split('\n'):
-        nails.append([x for x in n])
-    for t in tokens_text.split('\n'):
-        tokens.append([x for x in t])
-
-    R = len(nails)
-    C = len(nails[0])
-
-    slot_count = (C + 1) // 2
-
-    res = 0
-    for i in range(slot_count):
-        slot_num = i + 1
-        token = tokens[i][:]
-        r = 0
-        c = i * 2
-        is_final = False
-        while not is_final:
-            if nails[r][c] == "*":
-                d = token.pop(0)
-                if d == "R":
-                    if c == C - 1:
-                        c -= 1
-                    else:
-                        c += 1
-                    r += 1
-                elif d == "L":
-                    if c == 0:
-                        c += 1
-                    else:
-                        c -= 1
-                    r += 1
-                else:
-                    assert False, "unknown direction " + d
-            elif nails[r][c] == ".":
-                # fall down
-                r += 1
-            else:
-                assert False, "unknown nail " + nails[r][c]
-            if r == R and c % 2 == 0:
-                is_final = True
-
-        assert c % 2 == 0
-        current_slot = c // 2 + 1
-        res += max(0, (current_slot * 2) - slot_num)
-
-    return res
-
-
 def simulate(i, nails, R, C, token):
     slot_num = i + 1
     r = 0
@@ -84,6 +31,7 @@ def simulate(i, nails, R, C, token):
     token_behavior = token[:]
     while not is_final:
         if nails[r][c] == "*":
+            # bounce and fall down
             d = token_behavior.pop(0)
             if d == "R":
                 if c == C - 1:
@@ -100,7 +48,7 @@ def simulate(i, nails, R, C, token):
             else:
                 assert False, "unknown direction " + d
         elif nails[r][c] == ".":
-            # fall down
+            # only fall down
             r += 1
         else:
             assert False, "unknown nail " + nails[r][c]
@@ -111,6 +59,28 @@ def simulate(i, nails, R, C, token):
     current_slot = c // 2 + 1
     win = max(0, (current_slot * 2) - slot_num)
     return win
+
+
+def solve1(text):
+    nails = []
+    tokens = []
+    nails_text, tokens_text = text.split('\n\n')
+    for n in nails_text.split('\n'):
+        nails.append([x for x in n])
+    for t in tokens_text.split('\n'):
+        tokens.append([x for x in t])
+
+    R = len(nails)
+    C = len(nails[0])
+
+    slot_count = (C + 1) // 2
+
+    res = 0
+    for i in range(slot_count):
+        token = tokens[i][:]
+        res += simulate(i, nails, R, C, token)
+
+    return res
 
 
 def solve2(text):
@@ -164,13 +134,14 @@ def solve3(text):
     tokens_count = len(tokens)
 
     numbers = range(slot_count)
+    # depends on order, so use permutations
     six_tuples = list(permutations(numbers, tokens_count))
     max_total = None
     min_total = None
-    for t in six_tuples:
+    for indices in six_tuples:
         total = 0
         for i in range(6):
-            total += all_scores[i][t[i]]
+            total += all_scores[i][indices[i]]
         if max_total is None or total > max_total:
             max_total = total
         if min_total is None or total < min_total:
