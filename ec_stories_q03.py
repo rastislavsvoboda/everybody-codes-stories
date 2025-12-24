@@ -25,16 +25,11 @@ def get_all_nums(line):
 
 
 def move(x, y):
-    r = y - 1
-    c = x - 1
-    if r > 0:
-        r -= 1
-        c += 1
+    # move diagonally up-right, x is column, y is row, start at (1,1)
+    if y > 1:
+        return x + 1, y - 1
     else:
-        r = c
-        c = 0
-
-    return c + 1, r + 1
+        return 1, x
 
 
 def solve1(text):
@@ -118,9 +113,9 @@ def solve3(text):
         nums.append(period)
         rems.append(offset)
 
-    # first is at y = 1 after o1 + k1 * p1
-    # second is at y = 1 after o2 + k2 * p2
-    # last is at y = 1 after on + kn * pn
+    # first is at y = 1 at o1 + k1 * p1
+    # second is at y = 1 at o2 + k2 * p2
+    # last is at y = 1 at on + kn * pn
 
     # slow solution:
     # find t where all are at y = 1
@@ -135,7 +130,7 @@ def solve3(text):
     #             break
     # res = t
 
-    # chinese remainder theorem
+    # fast solution: chinese remainder theorem
     res = find_min_x(nums, rems)
 
     return res
